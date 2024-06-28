@@ -22,7 +22,7 @@ const Project = g.model('Project', {
 export default config({
   graph: g,
   auth: {
-    rules: (rules) => {
+    rules: (rules : any) => {
       rules.public()
     },
   },
