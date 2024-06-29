@@ -1,4 +1,4 @@
-import { config, g } from '@grafbase/sdk'
+import { g, config } from '@grafbase/sdk'
 
 const User = g.model('User', {
   name: g.string().length({ min: 2, max: 100 }),
@@ -7,7 +7,7 @@ const User = g.model('User', {
   description: g.string().length({ min: 2, max: 1000 }).optional(),
   githubUrl: g.url().optional(),
   linkedinUrl: g.url().optional(), 
-  projects: g.relation('Project').list().optional(),
+  projects: g.list(g.relation(() => Project)).optional(),
 })
 
 const Project = g.model('Project', {
@@ -17,7 +17,7 @@ const Project = g.model('Project', {
   liveSiteUrl: g.url(), 
   githubUrl: g.url(), 
   category: g.string().search(),
-  createdBy: g.relation('User'),
+  createdBy: g.relation(() => User),
 })
 
 export default config({
