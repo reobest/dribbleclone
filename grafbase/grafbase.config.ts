@@ -25,12 +25,9 @@ const Project = g.model('Project', {
   createdBy: g.relation(() => User),
 })
 
-// Export the configuration
 export default config({
   schema: g,
   auth: {
-    rules: (rules) => {
-      rules.public()
-    },
+    rules: (rules) => rules.private()
   },
 })
