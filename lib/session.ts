@@ -1,9 +1,5 @@
-import { getServerSession } from "next-auth/next";
-import { NextAuthOptions, User } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
+import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-// import jsonwebtoken from 'jsonwebtoken'
-import { JWT } from "next-auth/jwt";
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
@@ -11,4 +7,16 @@ export const authOptions: NextAuthOptions = {
           clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
       ],
+      session:{
+        strategy : 'jwt',
+        maxAge : 1 * 24 * 60 * 60,
+      },
+      jwt : {
+
+      },
+      callbacks : {
+        
+      },
+      secret: process.env.NEXTAUTH_SECRET
+
 }

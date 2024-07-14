@@ -15,8 +15,9 @@ const Footerurls = ({ title, links }: FooterURLs) => {
 }
 const Footer = () => {
     return (
-        <div className='w-full flex flex-col'>
-            <div className='flex flex-col gap-3 px-4'>
+        <div className='w-full flex flex-col relative  z-10 h-[700px] sm:h-[530px] md:h-[350]'>
+            <hr className='w-full text-slate-200' />
+            <div className='flex flex-col gap-3 px-4 mt-[30px]'>
                 <Image
                     src='logo.svg'
                     alt='logo'
@@ -43,9 +44,6 @@ const Footer = () => {
                 <div>
                     <Footerurls title={footerLinks[6].title} links={footerLinks[6].links} />
                 </div>
-            </div>
-            <div className='flex mt-12 px-4'>
-                <p className='text-sm text-slate-600'>@2023 Flexibble. all rights reserved</p>
             </div>
         </div>
     )

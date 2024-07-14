@@ -94,4 +94,14 @@ export const footerLinks = [
     ],
   },
 ];
+export type project = {
+  id: string;
+  title?: string;
+  email:string;
+  description?: string;
+  githuburl?: string;
+  weburl?: string;
+  image?: string;
+  category?: string;
+};
 
