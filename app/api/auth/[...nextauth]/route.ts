@@ -5,4 +5,4 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     return NextAuth(req, res, authOptions);
   };
 
-export { handler as GET, handler as POST }
+  export default handler;
