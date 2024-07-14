@@ -39,7 +39,7 @@ const ProjectForm = ({ type, id }: Type) => {
         formData.append('image', image);
         let imageUrl
         try {
-            const response = await fetch('http://localhost:4001/upload', {
+            const response = await fetch('https://dribble-backend-10rn.onrender.com/upload', {
                 method: 'POST',
                 body: formData
             });
