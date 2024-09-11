@@ -4,11 +4,21 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { fetchProjects } from '@/utils';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+} from "@/components/ui/alert-dialog"
+
 import Link from 'next/link';
 import { generateRandomLikes, generateRandomViews } from '@/utils';
 const Categories = () => {
     const router = useRouter()
     const session = useSession()
+    const [dialog,setDialog] = useState<boolean>(false)
     const [projects, setProjects] = useState<any>([]);
     const [hover, setHover] = useState(false)
     const [hoverId, setHoverId] = useState('')
@@ -16,7 +26,12 @@ const Categories = () => {
     const searchParams = useSearchParams();
     const field = searchParams.get('field');
     const handleDetails = (id: string) => {
-        router.push(`/project/${id}`)
+        if (session?.data?.user?.email) {
+            router.push(`/project/${id}`)
+            return
+        }
+        setDialog(true)
+        router.push('/')
     }
 
     useEffect(() => {
@@ -43,12 +58,25 @@ const Categories = () => {
 
     return (
         <div className='w-full flex flex-wrap  items-center justify-center gap-6 p-2 cursor-pointer mt-10' >
+            <AlertDialog open={dialog} onOpenChange={() => setDialog(false)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogDescription className='w-full text-center text-lg font-normal  text-black'>
+                            Please Sign in first.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+
             {projects && projects.map((project: any) => {
                 return <div className='w-[250px] h-[220px] rounded-md relative' key={project.id} onClick={() => handleDetails(project.id)}
-                 onMouseMove={() => {
-                    setHover(true),
-                        setHoverId(project.id)
-                }}
+                    onMouseMove={() => {
+                        setHover(true),
+                            setHoverId(project.id)
+                    }}
                     onMouseLeave={() => setHover(false)}>
                     {hover && project.id == hoverId && <h1 className='text-white text-2xl absolute z-50 left-[15px] bottom-[80px]'>{project.title}</h1>}
                     {hover && project.id == hoverId && <div className='absolute top-0 

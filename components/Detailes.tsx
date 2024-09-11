@@ -16,6 +16,8 @@ const Details = ({ id }: { id: string }) => {
   const [filtered2, setFiltered2] = useState<any>([]);
   const [userFound, setUserFound] = useState<boolean>(false)
   const [projectDetails, setProjectDetails] = useState<any>([])
+
+  
   const projecImage = projectDetails[0]?.image || '/lg.gif'
   const queryParams = {
     type: 'edit',
@@ -41,14 +43,14 @@ const Details = ({ id }: { id: string }) => {
   useEffect(() => {
     if (session?.data?.user?.email && projects.length > 0) {
       const thisProjectDetails = projects.filter((pro: any) => pro.id === id);
+      
+      
       const filteredArray2 = projects.filter((pro: any) => session?.data?.user?.email === pro.email && pro.id === id);
       const filteredArray1 = userFound ? projects.filter((pro: any) => session?.data?.user?.email === pro.email && pro.id !== id)
         : projects.filter((pro: any) => thisProjectDetails[0]?.email === pro.email && pro.id !== id)
       setFiltered(filteredArray1);
       setFiltered2(filteredArray2);
       setProjectDetails(thisProjectDetails);
-
-
     }
   }, [projects, session, id]);
   useEffect(() => { checkUser() }, [filtered2])
